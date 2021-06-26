@@ -24,5 +24,5 @@ Download the latest [ZIP](https://github.com/ZeroSimple/MicrosoftHostsPicker/arc
 
 Next, all processes are automated. The script will automatically pick the best IP. The output results is in the "hosts" file in the same directory as "MicrosoftHostsPicker.py". Please select the hosts you need to add to your system. 
 
-You only need to replace the original abnormal IPs without overwriting them all, otherwise it may be counterproductive (after all, my collection of IPs is not complete). For example, Office downloads and Windows updates have CDN nodes all over the world, so you don't need to manually configure Hosts unless your DNS resolves incorrectly. 
+You only need to replace the original abnormal IPs without overwriting them all, otherwise it may be counterproductive (after all, my collection of IPs is not complete). For example, Office Download and Windows Update have CDN nodes all over the world, so you don't need to manually configure Hosts unless your DNS resolves incorrectly. 
 
