@@ -13,7 +13,8 @@ def pingIP(result):
             IPstrip=TargetIP.strip()
             PingTime=ping3.ping(IPstrip,timeout=1,unit='ms')
             if not PingTime:
-                PingTime=5000.0
+                TotalTime=5000.0*n
+                break
             TotalTime=TotalTime+PingTime
         print(IPstrip+','+str(int(TotalTime/n)))
         Time.append(int(TotalTime/n))
