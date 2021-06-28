@@ -24,6 +24,15 @@ def pingIP(result):
     fread.close()
     return
 
+'''
+OneDrive Hosts beta
+'''
+fread=open(r"./data/Microsoft_Login.txt",'r')
+fwrite.writelines('#OneDrive(Beta, only for China) '+'\n')
+fwrite.writelines('134.170.108.26'+' '+'onedrive.live.com'+'\n')
+fwrite.writelines('134.170.109.48'+' '+'skyapi.onedrive.live.com'+'\n')
+fwrite.writelines('\n')
+
 fread=open(r"./data/Microsoft_Login.txt",'r')
 pingIP(result)
 fwrite.writelines('#Microsoft Login '+'\n')
