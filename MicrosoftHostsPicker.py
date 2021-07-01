@@ -1,10 +1,8 @@
 from ping3 import ping
 
-Time = []
-
 
 def pingIP(file):
-    Time.clear()
+    Time = list()
     TargetIP = file.readline()
     while TargetIP:
         n = 3
@@ -16,10 +14,10 @@ def pingIP(file):
                 TotalTime = 5000.0*n
                 break
             TotalTime = TotalTime+PingTime
-        print(IPstrip+','+str(int(TotalTime/n)))
-        Time.append(int(TotalTime/n))
+        print(IPstrip+','+int(TotalTime/n))
+        Time.append(TotalTime/n)
         Time.sort()
-        if (int(TotalTime/n) == Time[0]):
+        if (TotalTime/n == Time[0]):
             result_list = list()
             result_list.append(IPstrip)
         TargetIP = file.readline()
@@ -34,6 +32,8 @@ with open("hosts", 'w') as hosts:
     hosts.writelines('134.170.108.26 onedrive.live.com\n')
     hosts.writelines('134.170.109.48 skyapi.onedrive.live.com\n\n')
 
+    # Microsoft Hosts
+
     with open("./data/Microsoft_Login.txt", 'r') as Microsoft_Login:
         result_list = pingIP(Microsoft_Login)
         hosts.writelines('#Microsoft Login \n')
@@ -45,24 +45,22 @@ with open("hosts", 'w') as hosts:
         print(result_list)
 
     with open("./data/Microsoft_Account.txt", 'r') as Microsoft_Account:
-        pingIP(Microsoft_Account)
+        result_list = pingIP(Microsoft_Account)
         hosts.writelines('#Microsoft Account \n')
         hosts.writelines(result_list[0]+' account.microsoft.com\n\n')
         print("Microsoft_Account")
         print(result_list)
 
-    # fread=open("./data/OneNote.txt",'r')
-    # pingIP()
-    # hosts.writelines('#OneNote \n')
-    # hosts.writelines(result_list[0]+' hierarchyapi.onenote.com\n')
-    # hosts.writelines(result_list[0]+' contentsync.onenote.com\n')
-    # hosts.writelines(result_list[0]+' d.docs.live.net\n')
-    # print(result_list)
-    #
-    # hosts.writelines('\n')
+    # with open("./data/OneNote.txt", 'r') as OneNote:
+    #     result_list = pingIP(OneNote)
+    #     hosts.writelines('#OneNote \n')
+    #     hosts.writelines(result_list[0]+' hierarchyapi.onenote.com\n')
+    #     hosts.writelines(result_list[0]+' contentsync.onenote.com\n')
+    #     hosts.writelines(result_list[0]+' d.docs.live.net\n\n')
+    #     print(result_list)
 
     with open("./data/Xbox_Live_CDN_1.txt", 'r') as Xbox_Live_CDN_1:
-        pingIP(Xbox_Live_CDN_1)
+        result_list = pingIP(Xbox_Live_CDN_1)
         hosts.writelines('#Xbox Live CDN \n')
         hosts.writelines(result_list[0]+' images-eds.xboxlive.com\n')
         hosts.writelines(result_list[0]+' xbl-smooth.xboxlive.com\n')
@@ -72,7 +70,7 @@ with open("hosts", 'w') as hosts:
         hosts.writelines(result_list[0]+' compass.xboxlive.com\n')
 
     with open("./data/Xbox_Live_CDN_2.txt", 'r') as Xbox_Live_CDN_2:
-        pingIP(Xbox_Live_CDN_2)
+        result_list = pingIP(Xbox_Live_CDN_2)
         hosts.writelines(result_list[0]+' xnotify.xboxlive.com\n')
         hosts.writelines(result_list[0]+' activityhub.xboxlive.com\n')
         hosts.writelines(result_list[0]+' xboxcare.xboxlive.com\n')
@@ -84,28 +82,28 @@ with open("hosts", 'w') as hosts:
         print(result_list)
 
     with open("./data/Xbox_Cloud_Sync.txt", 'r') as Xbox_Cloud_Sync:
-        pingIP(Xbox_Cloud_Sync)
+        result_list = pingIP(Xbox_Cloud_Sync)
         hosts.writelines('#Xbox Cloud Sync \n')
         hosts.writelines(result_list[0]+' titlestorage.xboxlive.com\n\n')
         print("Xbox_Cloud_Sync")
         print(result_list)
 
     with open("./data/Office_CDN.txt", 'r') as Office_CDN:
-        pingIP(Office_CDN)
+        result_list = pingIP(Office_CDN)
         hosts.writelines('#Office CDN \n')
         hosts.writelines(result_list[0]+' officecdn.microsoft.com\n\n')
         print("Office_CDN")
         print(result_list)
 
     with open("./data/Microsoft_Store_Images.txt", 'r') as Microsoft_Store_Images:
-        pingIP(Microsoft_Store_Images)
+        result_list = pingIP(Microsoft_Store_Images)
         hosts.writelines('#Microsoft Store Images \n')
         hosts.writelines(result_list[0]+' store-images.s-microsoft.com\n\n')
         print("Microsoft_Store_Images")
         print(result_list)
 
     with open("./data/Microsoft_Store_Pages.txt", 'r') as Microsoft_Store_Pages:
-        pingIP(Microsoft_Store_Pages)
+        result_list = pingIP(Microsoft_Store_Pages)
         hosts.writelines('#Microsoft Store Pages \n')
         hosts.writelines(
             result_list[0]+' storeedgefd.dsx.mp.microsoft.com\n\n')
@@ -113,7 +111,7 @@ with open("hosts", 'w') as hosts:
         print(result_list)
 
     with open("./data/Microsoft_Games_Download.txt", 'r') as Microsoft_Games_Download:
-        pingIP(Microsoft_Games_Download)
+        result_list = pingIP(Microsoft_Games_Download)
         hosts.writelines('#Microsoft Games Download \n')
         hosts.writelines(result_list[0]+' xvcf1.xboxlive.com\n')
         hosts.writelines(result_list[0]+' xvcf2.xboxlive.com\n\n')
@@ -121,7 +119,7 @@ with open("hosts", 'w') as hosts:
         print(result_list)
 
     with open("./data/Windows_Update.txt", 'r') as Windows_Update:
-        pingIP(Windows_Update)
+        result_list = pingIP(Windows_Update)
         hosts.writelines('#Windows Update \n')
         hosts.writelines(result_list[0]+' tlu.dl.delivery.mp.microsoft.com\n')
         hosts.writelines(result_list[0]+' dl.delivery.mp.microsoft.com\n')
