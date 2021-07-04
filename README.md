@@ -19,7 +19,7 @@ pip install ping3
 Download the latest [ZIP](https://github.com/ZeroSimple/MicrosoftHostsPicker/archive/refs/heads/main.zip) from the repo, unzip the ZIP archive to your preferred location and run the following command: 
 
 ```sh
-.\MicrosoftHostsPicker.py
+python MicrosoftHostsPicker.py
 ```
 
 Next, all processes are automated. The script will automatically pick the best IP. The output results is in the "hosts" file in the same directory as "MicrosoftHostsPicker.py". Please select the hosts you need to add to your system. 
