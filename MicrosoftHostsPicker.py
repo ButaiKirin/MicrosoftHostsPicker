@@ -14,7 +14,7 @@ def pingIP(file):
                 TotalTime = 5000.0*n
                 break
             TotalTime = TotalTime+PingTime
-        print(IPstrip+','+str(int(TotalTime/n)))
+        print(IPstrip+'\t\t', int(TotalTime/n))
         Time.append(TotalTime/n)
         Time.sort()
         if (TotalTime/n == Time[0]):
