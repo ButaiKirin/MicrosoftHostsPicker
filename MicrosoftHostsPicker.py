@@ -32,17 +32,12 @@ with open("hosts", 'w') as hosts:
     hosts.writelines('134.170.108.26 onedrive.live.com\n')
     hosts.writelines('134.170.109.48 skyapi.onedrive.live.com\n\n')
 
-    # Microsoft Hosts
-
-    with open("./data/Microsoft_Login.txt", 'r') as Microsoft_Login:
-        result_list = pingIP(Microsoft_Login)
-        hosts.writelines('#Microsoft Login \n')
-        hosts.writelines(result_list[0]+' logincdn.msauth.net\n')
-        hosts.writelines(result_list[0]+' login.live.com\n')
-        hosts.writelines(result_list[0]+' acctcdn.msauth.net\n')
-        hosts.writelines(result_list[0]+' account.live.com\n\n')
-        print("Microsoft_Login")
-        print(result_list)
+    # Microsoft Login Hosts
+    hosts.writelines('#Microsoft Login \n')
+    hosts.writelines('13.107.42.22 logincdn.msauth.ne\n')
+    hosts.writelines('13.107.42.22 login.live.com\n')
+    hosts.writelines('13.107.42.22 acctcdn.msauth.net\n')
+    hosts.writelines('13.107.42.22 account.live.com\n\n')
 
     with open("./data/Microsoft_Account.txt", 'r') as Microsoft_Account:
         result_list = pingIP(Microsoft_Account)
