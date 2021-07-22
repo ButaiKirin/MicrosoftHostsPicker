@@ -74,12 +74,12 @@ with open("hosts", 'w') as hosts:
         result_list = pingIP(Xbox_Live_CDN_1)
         hosts.writelines('#Xbox Live CDN\n')
         for url in Xbox_Live_CDN_1_list:
-            hosts.writable(result_list[0]+' '+url+'\n')
+            hosts.writelines(result_list[0]+' '+url+'\n')
 
     with open("./data/Xbox_Live_CDN_2.txt", 'r') as Xbox_Live_CDN_2:
         result_list = pingIP(Xbox_Live_CDN_2)
         for url in Xbox_Live_CDN_2_list:
-            hosts.writable(result_list[0]+' '+url+'\n')
+            hosts.writelines(result_list[0]+' '+url+'\n')
         print("Xbox_Live_CDN")
         print(result_list)
 
@@ -131,7 +131,7 @@ with open("hosts", 'w') as hosts:
         result_list = pingIP(Windows_Update)
         hosts.writelines('#Windows Update \n')
         for url in Windows_Update_list:
-            hosts.writable(result_list[0]+' '+url+'\n')
+            hosts.writelines(result_list[0]+' '+url+'\n')
         print("Windows_Update")
         print(result_list)
 
