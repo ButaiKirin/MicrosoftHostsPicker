@@ -53,26 +53,33 @@ with open("hosts", 'w') as hosts:
     #     hosts.writelines(result_list[0]+' contentsync.onenote.com\n')
     #     hosts.writelines(result_list[0]+' d.docs.live.net\n\n')
     #     print(result_list)
+    Xbox_Live_CDN_1_list = [
+        'gameclipscontent-d2009.xboxlive.com',
+        'images-eds.xboxlive.com',
+        'xbl-smooth.xboxlive.com',
+        'titlehub.xboxlive.com',
+        'compass.xboxlive.com'
+    ]
+    Xbox_Live_CDN_2_list = [
+        'xnotify.xboxlive.com',
+        'activityhub.xboxlive.com',
+        'xboxcare.xboxlive.com',
+        'images-eds-ssl.xboxlive.com',
+        'rta.xboxlive.com',
+        'peoplehub.xboxlive.com',
+        'editorial.xboxlive.com'
+    ]
 
     with open("./data/Xbox_Live_CDN_1.txt", 'r') as Xbox_Live_CDN_1:
         result_list = pingIP(Xbox_Live_CDN_1)
-        hosts.writelines('#Xbox Live CDN \n')
-        hosts.writelines(result_list[0]+' images-eds.xboxlive.com\n')
-        hosts.writelines(result_list[0]+' xbl-smooth.xboxlive.com\n')
-        hosts.writelines(
-            result_list[0]+' gameclipscontent-d2009.xboxlive.com\n')
-        hosts.writelines(result_list[0]+' titlehub.xboxlive.com\n')
-        hosts.writelines(result_list[0]+' compass.xboxlive.com\n')
+        hosts.writelines('#Xbox Live CDN\n')
+        for url in Xbox_Live_CDN_1_list:
+            hosts.writable(result_list[0]+' '+url+'\n')
 
     with open("./data/Xbox_Live_CDN_2.txt", 'r') as Xbox_Live_CDN_2:
         result_list = pingIP(Xbox_Live_CDN_2)
-        hosts.writelines(result_list[0]+' xnotify.xboxlive.com\n')
-        hosts.writelines(result_list[0]+' activityhub.xboxlive.com\n')
-        hosts.writelines(result_list[0]+' xboxcare.xboxlive.com\n')
-        hosts.writelines(result_list[0]+' images-eds-ssl.xboxlive.com\n')
-        hosts.writelines(result_list[0]+' rta.xboxlive.com\n')
-        hosts.writelines(result_list[0]+' peoplehub.xboxlive.com\n')
-        hosts.writelines(result_list[0]+' editorial.xboxlive.com\n\n')
+        for url in Xbox_Live_CDN_2_list:
+            hosts.writable(result_list[0]+' '+url+'\n')
         print("Xbox_Live_CDN")
         print(result_list)
 
@@ -113,13 +120,18 @@ with open("hosts", 'w') as hosts:
         print("Microsoft_Games_Download")
         print(result_list)
 
+    Windows_Update_list = [
+        'tlu.dl.delivery.mp.microsoft.com',
+        'dl.delivery.mp.microsoft.com',
+        'assets1.xboxlive.cn',
+        'assets2.xboxlive.cn'
+    ]
+
     with open("./data/Windows_Update.txt", 'r') as Windows_Update:
         result_list = pingIP(Windows_Update)
         hosts.writelines('#Windows Update \n')
-        hosts.writelines(result_list[0]+' tlu.dl.delivery.mp.microsoft.com\n')
-        hosts.writelines(result_list[0]+' dl.delivery.mp.microsoft.com\n')
-        hosts.writelines(result_list[0]+' assets1.xboxlive.cn\n')
-        hosts.writelines(result_list[0]+' assets2.xboxlive.cn\n\n')
+        for url in Windows_Update_list:
+            hosts.writable(result_list[0]+' '+url+'\n')
         print("Windows_Update")
         print(result_list)
 
