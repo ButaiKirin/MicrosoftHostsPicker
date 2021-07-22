@@ -33,11 +33,16 @@ with open("hosts", 'w') as hosts:
     hosts.writelines('134.170.109.48 skyapi.onedrive.live.com\n\n')
 
     # Microsoft Login Hosts
+    Microsoft_Login_list = [
+        'logincdn.msauth.ne',
+        'login.live.com',
+        'acctcdn.msauth.net',
+        'account.live.com',
+    ]
     hosts.writelines('#Microsoft Login \n')
-    hosts.writelines('13.107.42.22 logincdn.msauth.ne\n')
-    hosts.writelines('13.107.42.22 login.live.com\n')
-    hosts.writelines('13.107.42.22 acctcdn.msauth.net\n')
-    hosts.writelines('13.107.42.22 account.live.com\n\n')
+    for url in Microsoft_Login_list:
+        hosts.writelines('13.107.42.22'+' '+url+'\n')
+    hosts.writelines('\n')
 
     with open("./data/Microsoft_Account.txt", 'r') as Microsoft_Account:
         result_list = pingIP(Microsoft_Account)
@@ -53,6 +58,7 @@ with open("hosts", 'w') as hosts:
     #     hosts.writelines(result_list[0]+' contentsync.onenote.com\n')
     #     hosts.writelines(result_list[0]+' d.docs.live.net\n\n')
     #     print(result_list)
+
     Xbox_Live_CDN_1_list = [
         'gameclipscontent-d2009.xboxlive.com',
         'images-eds.xboxlive.com',
@@ -69,17 +75,16 @@ with open("hosts", 'w') as hosts:
         'peoplehub.xboxlive.com',
         'editorial.xboxlive.com'
     ]
-
     with open("./data/Xbox_Live_CDN_1.txt", 'r') as Xbox_Live_CDN_1:
         result_list = pingIP(Xbox_Live_CDN_1)
         hosts.writelines('#Xbox Live CDN\n')
         for url in Xbox_Live_CDN_1_list:
             hosts.writelines(result_list[0]+' '+url+'\n')
-
     with open("./data/Xbox_Live_CDN_2.txt", 'r') as Xbox_Live_CDN_2:
         result_list = pingIP(Xbox_Live_CDN_2)
         for url in Xbox_Live_CDN_2_list:
             hosts.writelines(result_list[0]+' '+url+'\n')
+        hosts.writelines('\n')
         print("Xbox_Live_CDN")
         print(result_list)
 
@@ -126,7 +131,6 @@ with open("hosts", 'w') as hosts:
         'assets1.xboxlive.cn',
         'assets2.xboxlive.cn'
     ]
-
     with open("./data/Windows_Update.txt", 'r') as Windows_Update:
         result_list = pingIP(Windows_Update)
         hosts.writelines('#Windows Update \n')
