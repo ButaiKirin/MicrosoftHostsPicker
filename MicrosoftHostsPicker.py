@@ -1,145 +1,109 @@
+import concurrent.futures
+from typing import List, Tuple
 from ping3 import ping
 
 
-def pingIP(file):
-    Time = list()
-    TargetIP = file.readline()
-    while TargetIP:
-        n = 3
-        TotalTime = 0.0
-        for i in range(n):
-            IPstrip = TargetIP.strip()
-            PingTime = ping(IPstrip, timeout=1, unit='ms')
-            if not PingTime:
-                TotalTime = 5000.0*n
-                break
-            TotalTime = TotalTime+PingTime
-        print(IPstrip+'\t\t', int(TotalTime/n))
-        Time.append(TotalTime/n)
-        Time.sort()
-        if (TotalTime/n == Time[0]):
-            result_list = list()
-            result_list.append(IPstrip)
-        TargetIP = file.readline()
-    return result_list
+def ping_ip(ip: str, attempts: int = 3, timeout: float = 1.0) -> float:
+    total_time = 0.0
+    for _ in range(attempts):
+        ping_time = ping(ip, timeout=timeout, unit='ms')
+        if ping_time is None:
+            return float('inf')
+        total_time += ping_time
+    return total_time / attempts
 
 
-with open("hosts", 'w') as hosts:
+def process_ip_list(file_path: str) -> Tuple[str, float]:
+    best_ip = ''
+    best_time = float('inf')
+    with open(file_path, 'r') as file:
+        for ip in file:
+            ip = ip.strip()
+            avg_time = ping_ip(ip)
+            if avg_time < best_time:
+                best_ip = ip
+                best_time = avg_time
+    return best_ip, best_time
 
-    # OneDrive Hosts beta
 
-    hosts.writelines('#OneDrive(Beta, only for China) \n')
-    hosts.writelines('134.170.108.26 onedrive.live.com\n')
-    hosts.writelines('134.170.109.48 skyapi.onedrive.live.com\n\n')
+def write_hosts_section(hosts_file, title: str, ip: str, domains: List[str]):
+    hosts_file.write(f'# {title}\n')
+    for domain in domains:
+        hosts_file.write(f'{ip} {domain}\n')
+    hosts_file.write('\n')
 
-    # Microsoft Login Hosts
-    Microsoft_Login_list = [
-        'logincdn.msauth.ne',
-        'login.live.com',
-        'acctcdn.msauth.net',
-        'account.live.com',
-    ]
-    hosts.writelines('#Microsoft Login \n')
-    for url in Microsoft_Login_list:
-        hosts.writelines('13.107.42.22'+' '+url+'\n')
-    hosts.writelines('\n')
 
-    with open("./data/Microsoft_Account.txt", 'r') as Microsoft_Account:
-        result_list = pingIP(Microsoft_Account)
-        hosts.writelines('#Microsoft Account \n')
-        hosts.writelines(result_list[0]+' account.microsoft.com\n\n')
-        print("Microsoft_Account")
-        print(result_list)
+def main():
+    ip_files = {
+        'Microsoft_Account': './data/Microsoft_Account.txt',
+        'Xbox_Live_CDN_1': './data/Xbox_Live_CDN_1.txt',
+        'Xbox_Live_CDN_2': './data/Xbox_Live_CDN_2.txt',
+        'Xbox_Cloud_Sync': './data/Xbox_Cloud_Sync.txt',
+        'Office_CDN': './data/Office_CDN.txt',
+        'Microsoft_Store_Images': './data/Microsoft_Store_Images.txt',
+        'Microsoft_Store_Pages': './data/Microsoft_Store_Pages.txt',
+        'Microsoft_Games_Download': './data/Microsoft_Games_Download.txt',
+        'Windows_Update': './data/Windows_Update.txt',
+    }
 
-    # with open("./data/OneNote.txt", 'r') as OneNote:
-    #     result_list = pingIP(OneNote)
-    #     hosts.writelines('#OneNote \n')
-    #     hosts.writelines(result_list[0]+' hierarchyapi.onenote.com\n')
-    #     hosts.writelines(result_list[0]+' contentsync.onenote.com\n')
-    #     hosts.writelines(result_list[0]+' d.docs.live.net\n\n')
-    #     print(result_list)
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        future_to_file = {executor.submit(process_ip_list, file_path): file_name 
+                          for file_name, file_path in ip_files.items()}
+        
+        results = {}
+        for future in concurrent.futures.as_completed(future_to_file):
+            file_name = future_to_file[future]
+            ip, time = future.result()
+            results[file_name] = ip
+            print(f"{file_name}: {ip} ({time:.2f}ms)")
 
-    Xbox_Live_CDN_1_list = [
-        'gameclipscontent-d2009.xboxlive.com',
-        'images-eds.xboxlive.com',
-        'xbl-smooth.xboxlive.com',
-        'titlehub.xboxlive.com',
-        'compass.xboxlive.com'
-    ]
-    Xbox_Live_CDN_2_list = [
-        'xnotify.xboxlive.com',
-        'activityhub.xboxlive.com',
-        'xboxcare.xboxlive.com',
-        'images-eds-ssl.xboxlive.com',
-        'rta.xboxlive.com',
-        'peoplehub.xboxlive.com',
-        'editorial.xboxlive.com'
-    ]
-    with open("./data/Xbox_Live_CDN_1.txt", 'r') as Xbox_Live_CDN_1:
-        result_list = pingIP(Xbox_Live_CDN_1)
-        hosts.writelines('#Xbox Live CDN\n')
-        for url in Xbox_Live_CDN_1_list:
-            hosts.writelines(result_list[0]+' '+url+'\n')
-    with open("./data/Xbox_Live_CDN_2.txt", 'r') as Xbox_Live_CDN_2:
-        result_list = pingIP(Xbox_Live_CDN_2)
-        for url in Xbox_Live_CDN_2_list:
-            hosts.writelines(result_list[0]+' '+url+'\n')
-        hosts.writelines('\n')
-        print("Xbox_Live_CDN")
-        print(result_list)
+    with open("hosts", 'w') as hosts:
+        # OneDrive Hosts beta
+        write_hosts_section(hosts, 'OneDrive (Beta, only for China)', '',
+                            ['134.170.108.26 onedrive.live.com',
+                             '134.170.109.48 skyapi.onedrive.live.com'])
 
-    with open("./data/Xbox_Cloud_Sync.txt", 'r') as Xbox_Cloud_Sync:
-        result_list = pingIP(Xbox_Cloud_Sync)
-        hosts.writelines('#Xbox Cloud Sync \n')
-        hosts.writelines(result_list[0]+' titlestorage.xboxlive.com\n\n')
-        print("Xbox_Cloud_Sync")
-        print(result_list)
+        # Microsoft Login Hosts
+        write_hosts_section(hosts, 'Microsoft Login', '13.107.42.22',
+                            ['logincdn.msauth.net', 'login.live.com',
+                             'acctcdn.msauth.net', 'account.live.com'])
 
-    with open("./data/Office_CDN.txt", 'r') as Office_CDN:
-        result_list = pingIP(Office_CDN)
-        hosts.writelines('#Office CDN \n')
-        hosts.writelines(result_list[0]+' officecdn.microsoft.com\n\n')
-        print("Office_CDN")
-        print(result_list)
+        write_hosts_section(hosts, 'Microsoft Account', results['Microsoft_Account'],
+                            ['account.microsoft.com'])
 
-    with open("./data/Microsoft_Store_Images.txt", 'r') as Microsoft_Store_Images:
-        result_list = pingIP(Microsoft_Store_Images)
-        hosts.writelines('#Microsoft Store Images \n')
-        hosts.writelines(result_list[0]+' store-images.s-microsoft.com\n\n')
-        print("Microsoft_Store_Images")
-        print(result_list)
+        # Xbox Live CDN
+        xbox_live_cdn_domains = [
+            'gameclipscontent-d2009.xboxlive.com', 'images-eds.xboxlive.com',
+            'xbl-smooth.xboxlive.com', 'titlehub.xboxlive.com', 'compass.xboxlive.com',
+            'xnotify.xboxlive.com', 'activityhub.xboxlive.com', 'xboxcare.xboxlive.com',
+            'images-eds-ssl.xboxlive.com', 'rta.xboxlive.com', 'peoplehub.xboxlive.com',
+            'editorial.xboxlive.com'
+        ]
+        write_hosts_section(hosts, 'Xbox Live CDN', results['Xbox_Live_CDN_1'], xbox_live_cdn_domains)
 
-    with open("./data/Microsoft_Store_Pages.txt", 'r') as Microsoft_Store_Pages:
-        result_list = pingIP(Microsoft_Store_Pages)
-        hosts.writelines('#Microsoft Store Pages \n')
-        hosts.writelines(
-            result_list[0]+' storeedgefd.dsx.mp.microsoft.com\n\n')
-        print("Microsoft_Store_Pages")
-        print(result_list)
+        write_hosts_section(hosts, 'Xbox Cloud Sync', results['Xbox_Cloud_Sync'],
+                            ['titlestorage.xboxlive.com'])
 
-    with open("./data/Microsoft_Games_Download.txt", 'r') as Microsoft_Games_Download:
-        result_list = pingIP(Microsoft_Games_Download)
-        hosts.writelines('#Microsoft Games Download \n')
-        hosts.writelines(result_list[0]+' xvcf1.xboxlive.com\n')
-        hosts.writelines(result_list[0]+' xvcf2.xboxlive.com\n\n')
-        print("Microsoft_Games_Download")
-        print(result_list)
+        write_hosts_section(hosts, 'Office CDN', results['Office_CDN'],
+                            ['officecdn.microsoft.com'])
 
-    Windows_Update_list = [
-        'tlu.dl.delivery.mp.microsoft.com',
-        'dl.delivery.mp.microsoft.com',
-        'assets1.xboxlive.cn',
-        'assets2.xboxlive.cn'
-    ]
-    with open("./data/Windows_Update.txt", 'r') as Windows_Update:
-        result_list = pingIP(Windows_Update)
-        hosts.writelines('#Windows Update \n')
-        for url in Windows_Update_list:
-            hosts.writelines(result_list[0]+' '+url+'\n')
-        print("Windows_Update")
-        print(result_list)
+        write_hosts_section(hosts, 'Microsoft Store Images', results['Microsoft_Store_Images'],
+                            ['store-images.s-microsoft.com'])
 
-print('All done.')
-print('The output Hosts file is in the "hosts" in the same directory as "MicrosoftHostsPicker.py".')
-print('Please select the hosts you need to add to your system.')
-input()
+        write_hosts_section(hosts, 'Microsoft Store Pages', results['Microsoft_Store_Pages'],
+                            ['storeedgefd.dsx.mp.microsoft.com'])
+
+        write_hosts_section(hosts, 'Microsoft Games Download', results['Microsoft_Games_Download'],
+                            ['xvcf1.xboxlive.com', 'xvcf2.xboxlive.com'])
+
+        write_hosts_section(hosts, 'Windows Update', results['Windows_Update'],
+                            ['tlu.dl.delivery.mp.microsoft.com', 'dl.delivery.mp.microsoft.com',
+                             'assets1.xboxlive.cn', 'assets2.xboxlive.cn'])
+
+    print('All done.')
+    print('The output Hosts file is in the "hosts" in the same directory as "MicrosoftHostsPicker.py".')
+    print('Please select the hosts you need to add to your system.')
+    input('Press Enter to exit...')
+
+if __name__ == '__main__':
+    main()

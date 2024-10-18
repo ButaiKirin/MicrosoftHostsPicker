@@ -1,0 +1,225 @@
+:root {
+    --bg-color: #F3F9FF;     /* 桜鼠 (Sakura Nezumi) - 淡粉色背景 */
+    --primary-color: #e87a90; /* 蘇芳 (Suoh) - 深红色主色调 */
+    --secondary-color: #FEDFE1; /* 桃色 (Momo-iro) - 浅粉色次要色调 */
+    --text-color: #B5495B;   /* 葡萄 (Budou) - 深紫色文字 */
+    --accent-color: #E16B8C; /* 牡丹 (Botan) - 亮粉色强调色 */
+}
+
+body {
+    font-family: 'Noto Sans SC', 'Noto Sans JP', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: white;
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 800px;
+    width: 90%;
+    transition: all 0.3s ease;
+}
+
+.container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+}
+
+.title {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    animation: fadeInDown 1s ease-out;
+}
+
+.description {
+    color: var(--text-color);
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+.language-switch {
+    margin-bottom: 1rem;
+}
+
+.language-switch button {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.language-switch button.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.features {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+}
+
+.feature {
+    flex: 1;
+    margin: 0 1rem;
+    padding: 1.5rem;
+    background-color: var(--secondary-color);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.6s ease-out backwards;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+}
+
+.emoji {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.feature h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.feature p {
+    color: var(--text-color);
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 1rem 2rem;  /* 增加内边距 */
+    border-radius: 30px;  /* 增加圆角 */
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;  /* 增加字体大小 */
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite;
+    margin: 2rem 0;  /* 增加上下外边距 */
+}
+
+.cta-button:hover {
+    background-color: #C62700;
+    transform: scale(1.05);
+}
+
+footer {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    text-align: center;
+}
+
+footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(232, 48, 21, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(232, 48, 21, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(232, 48, 21, 0);
+    }
+}
+
+@media (max-width: 768px) {
+    .features {
+        flex-direction: column;
+    }
+    
+    .feature {
+        margin: 1rem 0;
+    }
+}
+
+
+.feature:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.feature:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.feature:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.features {
+    margin-bottom: 3rem;  /* 增加下方间距 */
+}
+
+.quick-start {
+    margin-top: 3rem;  /* 增加上方间距 */
+}
+
+
+.steps ul, .usage-tips ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.steps li, .usage-tips li {
+    margin-bottom: 1rem;
+}
