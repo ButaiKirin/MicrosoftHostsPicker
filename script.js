@@ -6,17 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const lastFeatureDelay = 0.6; // 最后一个特性卡片的延迟
     const featureAnimationDuration = 0.6; // 每个特性卡片的动画持续时间
     const totalFeatureAnimationTime = lastFeatureDelay + featureAnimationDuration;
-    
-    // 设置 Quick Start 的动画延迟
-    setTimeout(() => {
-        quickStart.classList.add('show');
-    }, totalFeatureAnimationTime * 1000); // 转换为毫秒
-    
-    features.forEach((feature, index) => {
-        feature.style.animationDelay = `${index * 0.2 + 1}s`;
-    });
 
-    // 现有的语言切换逻辑
+
     const zhBtn = document.getElementById('zh-btn');
     const enBtn = document.getElementById('en-btn');
 
@@ -48,4 +39,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const startYear = 2021;
     const currentYear = new Date().getFullYear();
     copyrightYearsSpan.textContent = startYear === currentYear ? startYear : `${startYear}-${currentYear}`;
+
+    // 获取 GitHub star 数量
+    fetch('https://api.github.com/repos/ButaiKirin/MicrosoftHostsPicker')
+        .then(response => response.json())
+        .then(data => {
+            const starCount = document.getElementById('star-count');
+            starCount.textContent = data.stargazers_count;
+        })
+        .catch(error => console.error('Error fetching GitHub stats:', error));
 });

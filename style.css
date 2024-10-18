@@ -1,9 +1,10 @@
 :root {
-    --bg-color: #F3F9FF;     /* 桜鼠 (Sakura Nezumi) - 淡粉色背景 */
-    --primary-color: #e87a90; /* 蘇芳 (Suoh) - 深红色主色调 */
-    --secondary-color: #FEDFE1; /* 桃色 (Momo-iro) - 浅粉色次要色调 */
-    --text-color: #B5495B;   /* 葡萄 (Budou) - 深紫色文字 */
-    --accent-color: #E16B8C; /* 牡丹 (Botan) - 亮粉色强调色 */
+    --bg-color: #F3F9FF;
+    --primary-color: #e87a90;
+    --secondary-color: #ffe8ea;
+    --text-color: #F596AA;
+    --accent-color: #e15e83;
+    --accent-color-rgb: 232, 48, 21;
 }
 
 body {
@@ -44,12 +45,13 @@ body {
 .description {
     color: var(--text-color);
     font-size: 1.2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     animation: fadeInUp 1s ease-out 0.5s both;
 }
 
 .language-switch {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.6s ease-out 0.8s both;
 }
 
 .language-switch button {
@@ -66,6 +68,11 @@ body {
 .language-switch button.active {
     background-color: var(--primary-color);
     color: white;
+}
+
+.language-switch button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .features {
@@ -108,19 +115,45 @@ body {
     display: inline-block;
     background-color: var(--accent-color);
     color: white;
-    padding: 1rem 2rem;  /* 增加内边距 */
-    border-radius: 30px;  /* 增加圆角 */
+    padding: 1rem 2rem;
+    border-radius: 30px;
     text-decoration: none;
     font-weight: bold;
-    font-size: 1.2rem;  /* 增加字体大小 */
+    font-size: 1.2rem;
     transition: all 0.3s ease;
-    animation: pulse 2s infinite;
-    margin: 2rem 0;  /* 增加上下外边距 */
+    animation: 
+        fadeInUp 0.6s ease-out 1s both,
+        pulse 2s infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg);
+    animation: shimmer 3s infinite;
 }
 
 .cta-button:hover {
     background-color: #C62700;
-    transform: scale(1.05);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(var(--accent-color-rgb), 0.3);
+}
+
+.cta-button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(var(--accent-color-rgb), 0.2);
 }
 
 footer {
@@ -172,13 +205,22 @@ footer a:hover {
 
 @keyframes pulse {
     0% {
-        box-shadow: 0 0 0 0 rgba(232, 48, 21, 0.4);
+        box-shadow: 0 0 0 0 rgba(var(--accent-color-rgb), 0.4);
     }
     70% {
-        box-shadow: 0 0 0 15px rgba(232, 48, 21, 0);
+        box-shadow: 0 0 0 15px rgba(var(--accent-color-rgb), 0);
     }
     100% {
-        box-shadow: 0 0 0 0 rgba(232, 48, 21, 0);
+        box-shadow: 0 0 0 0 rgba(var(--accent-color-rgb), 0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -100% 0;
+    }
+    100% {
+        background-position: 100% 0;
     }
 }
 
@@ -206,11 +248,11 @@ footer a:hover {
 }
 
 .features {
-    margin-bottom: 3rem;  /* 增加下方间距 */
+    margin-bottom: 3rem;
 }
 
 .quick-start {
-    margin-top: 3rem;  /* 增加上方间距 */
+    margin-top: 3rem;
 }
 
 
@@ -222,4 +264,39 @@ footer a:hover {
 
 .steps li, .usage-tips li {
     margin-bottom: 1rem;
+}
+
+.github-stats {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.6s ease-out 0.6s both;
+}
+
+.github-stars {
+    display: inline-flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.github-stars:hover {
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.github-stars svg {
+    margin-right: 0.5rem;
+    fill: #f1e05a;
+}
+
+.github-stars #star-count {
+    margin-right: 0.5rem;
+    font-weight: bold;
 }
