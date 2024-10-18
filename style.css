@@ -195,12 +195,8 @@ footer a:hover {
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes pulse {
@@ -269,27 +265,27 @@ footer a:hover {
 .github-stats {
     display: flex;
     justify-content: center;
-    margin-bottom: 1.5rem;
-    animation: fadeInUp 0.6s ease-out 0.6s both;
+    margin: 1rem 0;
+    animation: fadeIn 1s ease-out;
 }
 
 .github-stars {
     display: inline-flex;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 20px;
+    background-color: #f0f0f0;
+    color: #333;
     padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    color: var(--text-color);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    border-radius: 20px;
     text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .github-stars:hover {
-    background-color: rgba(255, 255, 255, 1);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    background-color: #e0e0e0;
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
 .github-stars svg {
@@ -297,7 +293,57 @@ footer a:hover {
     fill: #f1e05a;
 }
 
-.github-stars #star-count {
-    margin-right: 0.5rem;
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    border-radius: 30px;
+    text-decoration: none;
     font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.download-button {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.download-button:hover {
+    background-color: #C62700;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(232, 48, 21, 0.3);
+}
+
+.github-button {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.github-button:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.action-buttons {
+    animation: fadeInUp 0.6s ease-out 1s both;
 }
